@@ -1,5 +1,5 @@
 import { Button, Center, Container, Flex, Input, InputGroup, InputProps, InputRightElement, Text, TextProps, VStack } from "@chakra-ui/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { isValidEmailString, isValidPWString } from "../../utils/StringCheck"
 import useValidInput from "../../hooks/useValidInput"
 import { InfoOutlineIcon } from "@chakra-ui/icons"
@@ -10,10 +10,18 @@ import { postSignIn, postSignUp } from "../../api/axios/post"
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import { AxiosError, AxiosResponse } from "axios"
+import { PATH } from "../../constants/path"
+import { getAccessToken } from "../../utils/localStorage"
 
 const Signup = () => {
   const [isShow, setIsShow] = useState(false)
   const navi = useNavigate()
+  const [accessToken, setAccessToken] = useState(getAccessToken())
+  useEffect(() => {
+    if(accessToken){
+      navi(PATH.TODO)
+    }
+  }, [accessToken])
   const { inputVal: emailVal, isInputValid: isEmailVal, handleOnchangeInputValid: handleOnchangeEmailVal } = useValidInput({ initialVal: "", validCheckFunction: isValidEmailString })
   const { inputVal: pwVal, isInputValid: isPwVal, handleOnchangeInputValid: handleOnchangePwval } = useValidInput({ initialVal: "", validCheckFunction: isValidPWString })
   const [signupErrText, setSignupErrText] = useState("")
