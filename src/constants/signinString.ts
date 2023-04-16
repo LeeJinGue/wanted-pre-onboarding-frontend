@@ -1,0 +1,5 @@
+export const basicMargin = "1"
+export const emailInputPH = "이메일을 입력해주세요."
+export const pwInputPH = "비밀번호를 입력해주세요."
+export const emailErrMsg = "@를 포함해주세요"
+export const pwErrMsg = "8글자 이상 입력해주세요"
