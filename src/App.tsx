@@ -11,28 +11,21 @@ import {
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Signin from "./pages/signin"
+import Signup from "./pages/signup"
+import Todo from "./pages/todo"
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+    <BrowserRouter>
+      <h1>헤더입니다</h1>
+      <Routes>
+        <Route path="/todo" element={<Todo />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<h3>페이지가 존재하지 않습니다.</h3>} />
+      </Routes>
+    </BrowserRouter>
   </ChakraProvider>
 )
