@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { deleteTodo } from "../api/axios/delete"
 import { createTodos } from "../api/axios/post"
 import { updateTodos } from "../api/axios/put"

@@ -11,7 +11,6 @@ export const postSignUp = async (props:postSignInUpProps) => {
     } 
   }catch(error){
 
-    // console.log("# postSignUp Error:",error)
     // 실패시 오류메세지를 return
     const { response } = error as unknown as AxiosError
       const { data } = response as AxiosResponse
@@ -21,7 +20,6 @@ export const postSignUp = async (props:postSignInUpProps) => {
       }
     return "실패"
   }
- 
 }
 export const postSignIn = async (props:postSignInUpProps) => {
   const postURL = 'auth/signin'
@@ -31,7 +29,6 @@ export const postSignIn = async (props:postSignInUpProps) => {
     setAccessToken(postRes.data.access_token)
     return true
   }else {
-    // console.log("# postSignIn Error:",postRes)
     return "실패"
   }
 }
@@ -41,7 +38,5 @@ export const createTodos = async (props:createTodosProps) => {
   const postRes = await instance.post<createTodosProps, AxiosResponse<createTodosRes>>(postURL, {...props}, {headers: {Authorization: `Bearer ${getAccessToken()}`}})
   if(postRes.status === 201){
     return postRes.data
-  }else{
-    // console.log("# createTodos Error:",postRes)
   }
 }

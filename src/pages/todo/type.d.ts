@@ -3,7 +3,6 @@ type deleteWithIdType = (deleteId: number) => Promise<boolean>;
 type addWithTextType = (addTodoText: string) => Promise<TodoDTOT | undefined>;
 
 interface GetTodoDataType {
-  // initTodos: TodoDTOT[]
   resource: {
     todo: {
       read(): getTodosRes | undefined;

@@ -1,13 +1,8 @@
-import { Container, Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants/path";
 import { getAccessToken } from "../../utils/localStorage";
 import TodoView from "./Todo.view";
-import { getTodos } from "../../api/axios/get";
-import { updateTodos } from "../../api/axios/put";
-import { deleteTodo } from "../../api/axios/delete";
-import { createTodos } from "../../api/axios/post";
 import useTodoList from "../../hooks/useTodoList";
 import { fetchTodoData } from "./fetchTodoData";
 function TodoData() {
