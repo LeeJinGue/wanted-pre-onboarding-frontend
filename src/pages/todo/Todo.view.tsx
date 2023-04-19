@@ -1,33 +1,32 @@
-import { Container, ContainerProps, Flex } from "@chakra-ui/react"
-import { getAccessToken } from "../../utils/localStorage"
-import { useNavigate } from "react-router-dom"
-import { PATH } from "../../constants/path"
-import { useEffect, useState } from "react"
-import { getTodos } from "../../api/axios/get"
-import React from "react"
-import { fetchDataType } from "./fetchData"
-interface TodoViewProps extends ContainerProps{
-  todoData:fetchDataType
-}
-const TodoView = ({todoData}:TodoViewProps) => {
-  const todoList = todoData.todo.read()
-  // TODO를 받아옵니다.
-  
-
+import { Button, Container, Flex, Input } from "@chakra-ui/react"
+import { useState } from "react"
+import Title from "../../components/Title"
+import TodoItem from "./TodoItem"
+const TodoView = ({
+  todoList,
+  todoFunctions: {
+    updateWithTodo, deleteWithId, addWithText,
+  },
+  ...props
+}: TodoViewProps) => {
+  const [newTodo, setNewTodo] = useState("")
+  const handleAddTodo = async () => await addWithText(newTodo)
   return (<>
-      <Container size="sm" >
-        <Flex flexDir="column">
-          Todo 페이지입니다.
+    <Container size="lg" {...props}>
+      <Title title="TODO List" />
+      <Flex flexDir="column">
+        <Flex flexDir="row" alignItems="center">
+          <Input mx="5px" data-testid="new-todo-input" type="text" size="xs" w="30"
+            value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
+          <Button data-testid="new-todo-add-button" size="xs" onClick={handleAddTodo}>추가</Button>
+        </Flex>
+        <Flex flexDir="column" alignItems="start">
           {todoList.map((todo) => {
-            return <li key={todo.id}>
-              <label>
-                <input type="checkbox" checked={todo.isCompleted} />
-                <span>{todo.todo}</span>
-              </label>
-            </li>
+            return <TodoItem key={todo.id} todo={todo} updateWithTodo={updateWithTodo} deleteWithId={deleteWithId} />
           })}
         </Flex>
-      </Container>
+      </Flex>
+    </Container>
   </>)
 }
 export default TodoView
