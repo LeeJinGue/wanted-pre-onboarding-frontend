@@ -9,6 +9,8 @@ export const updateTodos = async (props:updateTodosProps) => {
     // 업데이트 성공 시 성공한 결과를 return 합니다.
     return putRes.data
   }else{
-    console.log("# updateTodos Error:",putRes)
+    // 업데이트 실패시 실패한 데이터를 return 합니다.
+    // console.log("# updateTodos Error:",putRes)
+    return putRes.data
   }
 }
