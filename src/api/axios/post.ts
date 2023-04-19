@@ -2,16 +2,26 @@ import { AxiosError, AxiosResponse } from "axios"
 import { getAccessToken, setAccessToken } from "../../utils/localStorage"
 import instance from "./axios"
 export const postSignUp = async (props:postSignInUpProps) => {
-  const postURL = 'auth/signup'
-  const postRes = await instance.post<postSignInUpProps, AxiosResponse<string, AxiosError>>(postURL, {...props})
-  if(postRes.status === 201){
-    // 회원가입 성공시 true를 return합니다.
-    return true
-  } else {
-    console.log("# postSignUp Error:",postRes)
+  try{
+    const postURL = 'auth/signup'
+    const postRes = await instance.post<postSignInUpProps, AxiosResponse<string, AxiosError>>(postURL, {...props})
+    if(postRes.status === 201){
+      // 회원가입 성공시 true를 return합니다.
+      return true
+    } 
+  }catch(error){
+
+    // console.log("# postSignUp Error:",error)
     // 실패시 오류메세지를 return
-    return postRes
+    const { response } = error as unknown as AxiosError
+      const { data } = response as AxiosResponse
+      if (typeof data.message === 'string') {
+        const { message } = data
+        return message
+      }
+    return "실패"
   }
+ 
 }
 export const postSignIn = async (props:postSignInUpProps) => {
   const postURL = 'auth/signin'
@@ -21,8 +31,8 @@ export const postSignIn = async (props:postSignInUpProps) => {
     setAccessToken(postRes.data.access_token)
     return true
   }else {
-    console.log("# postSignIn Error:",postRes)
-    return false
+    // console.log("# postSignIn Error:",postRes)
+    return "실패"
   }
 }
 
@@ -32,6 +42,6 @@ export const createTodos = async (props:createTodosProps) => {
   if(postRes.status === 201){
     return postRes.data
   }else{
-    console.log("# createTodos Error:",postRes)
+    // console.log("# createTodos Error:",postRes)
   }
 }
