@@ -19,12 +19,11 @@ import Todo from "./pages/todo"
 export const App = () => (
   <ChakraProvider theme={theme}>
     <BrowserRouter>
-      <h1>헤더입니다</h1>
       <Routes>
         <Route path="/todo" element={<Todo />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<h3>페이지가 존재하지 않습니다.</h3>} />
+        <Route path="*" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
