@@ -12,62 +12,10 @@ import { useNavigate } from "react-router-dom"
 import { AxiosError, AxiosResponse } from "axios"
 import { PATH } from "../../constants/path"
 import { getAccessToken } from "../../utils/localStorage"
+import Title from "../../components/Title"
+import LoginOrSignUp from "../../components/LoginOrSignup"
 const Signin = () => {
-  const [isShow, setIsShow] = useState(false)
-  const navi = useNavigate()
-  const [accessToken, setAccessToken] = useState(getAccessToken())
-  useEffect(() => {
-    if(accessToken){
-      navi(PATH.TODO)
-    }
-  }, [accessToken])
-  const { inputVal: emailVal, isInputValid: isEmailVal, handleOnchangeInputValid: handleOnchangeEmailVal } = useValidInput({ initialVal: "", validCheckFunction: isValidEmailString })
-  const { inputVal: pwVal, isInputValid: isPwVal, handleOnchangeInputValid: handleOnchangePwval } = useValidInput({ initialVal: "", validCheckFunction: isValidPWString })
-  const [loginErrorMsg, setLoginErrorMsg] = useState("")
-  const handleShowOnclick = () => setIsShow(!isShow)
-  const handleLoginOnclick = async () => {
-    try {
-      const postRes = await postSignIn({ email: emailVal, password: pwVal })
-      if (postRes) {
-        navi('/todo')
-      } //로그인 성공
-      else {
-      } 
-    } catch (error) {
-      // 로그인 실패
-      const { response } = error as unknown as AxiosError
-      const { data } = response as AxiosResponse
-      if (data?.message) {
-        const { message } = data
-        setLoginErrorMsg(message)
-      }
-    }
-  }
-  const isLoginDisabled = !isEmailVal || !isPwVal
-  return (
-    <>
-      <Container width="sm">
-        <Flex flexDir="column" align="center" justify="center">
-          로그인 페이지 입니다.
-            <LoginInput isInvalid={!isEmailVal} data-testid="email-input" value={emailVal} onChange={handleOnchangeEmailVal}
-              placeholder={emailInputPH} />
-            {!isEmailVal && <ErrorText errorMsg={emailErrMsg} />}
-            <InputGroup size="md">
-              <LoginInput pr="4.5rem" isInvalid={!isPwVal} value={pwVal} onChange={handleOnchangePwval} data-testid="password-input"
-                placeholder={pwInputPH} type={isShow ? "text" : "password"} />
-              <InputRightElement w="4.5rem" alignSelf="center" top="auto">
-                <Button size="sm" h="1.75rem" onClick={handleShowOnclick}>
-                  {isShow ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            {!isPwVal && <ErrorText errorMsg={pwErrMsg} />}
-            <Button isDisabled={isLoginDisabled} onClick={handleLoginOnclick} data-testid="signin-button" w="full">로그인</Button>
-            {loginErrorMsg && <ErrorText errorMsg={loginErrorMsg}/>}
-        </Flex>
-      </Container>
-    </>
-  )
+  return <LoginOrSignUp title={"LOGIN"} postFunction={postSignIn} nextPath={PATH.TODO} buttonTestId={"signin-button"} buttonText={"로그인"} />
 }
 
 export default Signin
